@@ -57,7 +57,7 @@ public class Proyecto {
     private String fortalezaTecnologica;
     private String experienciaRequerida;
     private int numeroPerfilesRequeridos;
-    private String titulacionesEmpleados;
+    private int curriculums;
     private Boolean idiomas;
     private String lugarTrabajo;
     private Double facturacionAnual;

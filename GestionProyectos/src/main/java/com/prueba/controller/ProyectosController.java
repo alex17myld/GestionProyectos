@@ -101,7 +101,7 @@ public class ProyectosController {
 			proyecto.setFortalezaTecnologica(newProyecto.getFortalezaTecnologica());
 			proyecto.setExperienciaRequerida(newProyecto.getExperienciaRequerida());
 			proyecto.setNumeroPerfilesRequeridos(newProyecto.getNumeroPerfilesRequeridos());
-			proyecto.setTitulacionesEmpleados(newProyecto.getTitulacionesEmpleados());
+			proyecto.setCurriculums(newProyecto.getCurriculums());
 			proyecto.setIdiomas(newProyecto.getIdiomas());
 			proyecto.setLugarTrabajo(newProyecto.getLugarTrabajo());
 			proyecto.setFacturacionAnual(newProyecto.getFacturacionAnual());
