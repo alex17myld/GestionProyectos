@@ -28,6 +28,7 @@ import com.prueba.modelo.VO.Proyecto;
 @RestController
 public class ProyectosController {
 
+	//Clase importante
 	private final ProyectosService service;
 	private final ProyectosAssembler assembler;
 
