@@ -91,22 +91,19 @@ public class ProyectosController {
 			proyecto.setPresupuesto(newProyecto.getPresupuesto());
 			proyecto.setTecnologias(newProyecto.getTecnologias());
 			proyecto.setRecursosAsignados(newProyecto.getRecursosAsignados());
-			proyecto.setResultado(newProyecto.getResultado());
 			proyecto.setFechaInicio(newProyecto.getFechaInicio());
 			proyecto.setFechaFin(newProyecto.getFechaFin());
 			proyecto.setFechaRegistro(newProyecto.getFechaRegistro());
 			proyecto.setSolvenciaEconomicaEmpresa(newProyecto.getSolvenciaEconomicaEmpresa());
-			proyecto.setCertificacionesRequeridas(newProyecto.getCertificacionesRequeridas());
+			proyecto.setCertificacionRequerida(newProyecto.getCertificacionRequerida());
 			proyecto.setPrecioHora(newProyecto.getPrecioHora());
 			proyecto.setFortalezaTecnologica(newProyecto.getFortalezaTecnologica());
 			proyecto.setExperienciaRequerida(newProyecto.getExperienciaRequerida());
-			proyecto.setNumeroPerfilesRequeridos(newProyecto.getNumeroPerfilesRequeridos());
-			proyecto.setCurriculums(newProyecto.getCurriculums());
-			proyecto.setIdiomas(newProyecto.getIdiomas());
+			proyecto.setIdioma(newProyecto.getIdioma());
 			proyecto.setLugarTrabajo(newProyecto.getLugarTrabajo());
 			proyecto.setFacturacionAnual(newProyecto.getFacturacionAnual());
 			proyecto.setVolumetria(newProyecto.getVolumetria());
-			proyecto.setEntregablesOferta(newProyecto.getEntregablesOferta());
+			proyecto.setEntregable(newProyecto.getEntregable());
 			
 			return service.save(proyecto);
 		}).orElseGet(() -> {

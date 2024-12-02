@@ -24,6 +24,7 @@ public class ProyectosAssembler implements RepresentationModelAssembler<Proyecto
 	@Override
 	public EntityModel<Proyecto> toModel(Proyecto proyecto) {
 		// TODO Auto-generated method stub
-		return null;
+		return EntityModel.of(proyecto, //
+				linkTo(methodOn(ProyectosController.class).one(proyecto.getId())).withSelfRel());
 	}
 }
