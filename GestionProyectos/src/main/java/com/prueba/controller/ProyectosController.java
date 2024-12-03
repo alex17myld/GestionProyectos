@@ -85,6 +85,7 @@ public class ProyectosController {
 	ResponseEntity<?> replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable Long id) {
 
 		Proyecto updatedProyecto = service.findById(id).map(proyecto -> {
+			proyecto.setId(newProyecto.getId());
 			proyecto.setCliente(newProyecto.getCliente());
 			proyecto.setNombreProyecto(newProyecto.getNombreProyecto());
 			proyecto.setDuracion(newProyecto.getDuracion());
@@ -104,7 +105,7 @@ public class ProyectosController {
 			proyecto.setFacturacionAnual(newProyecto.getFacturacionAnual());
 			proyecto.setVolumetria(newProyecto.getVolumetria());
 			proyecto.setEntregable(newProyecto.getEntregable());
-			
+			proyecto.setExito(newProyecto.isExito());
 			return service.save(proyecto);
 		}).orElseGet(() -> {
 			return service.save(newProyecto);

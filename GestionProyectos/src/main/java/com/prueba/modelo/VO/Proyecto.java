@@ -94,6 +94,8 @@ public class Proyecto {
     @Column(name = "porcentaje_exito")
     private double porcentajeExito;
 
+    private boolean exito;
+
 
     @Override
     public boolean equals(Object o) {
