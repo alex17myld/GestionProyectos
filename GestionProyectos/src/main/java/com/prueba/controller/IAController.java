@@ -3,7 +3,7 @@ package com.prueba.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.prueba.controller.service.ProyectosService;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -70,16 +69,16 @@ public class IAController {
             json.put("precio_hora", proyectoRecuperado.getPrecioHora().getNombre());
             json.put("volumetria", proyectoRecuperado.getVolumetria().getId());
 
-            System.out.println("JSON enviado al microservicio: " + json);
+            //System.out.println("JSON enviado al microservicio: " + json);
 
             // URL del microservicio de IA
-            String iaEndpointUrl = "http://localhost:8000/predict";
+            String iaEndpointUrl = "http://192.168.40.83:8000/predict/";
             RestTemplate restTemplate = new RestTemplate();
 
             // Crear los encabezados para la solicitud
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-
+            System.out.println(json.toString());
             // Crear la solicitud HttpEntity con el cuerpo JSON y los encabezados
             HttpEntity<String> request = new HttpEntity<>(json.toString(), headers);
 
@@ -87,6 +86,25 @@ public class IAController {
             ResponseEntity<String> iaResponse = restTemplate.postForEntity(iaEndpointUrl, request, String.class);
 
             System.out.println("Respuesta del microservicio de IA: " + iaResponse.getBody());
+            String porcentajeJson = iaResponse.getBody();
+            try {
+                // Crear un ObjectMapper
+                ObjectMapper mapperjson = new ObjectMapper();
+    
+                // Parsear el JSON directamente como JsonNode
+                JsonNode rootNode = mapperjson.readTree(porcentajeJson);
+    
+                // Extraer el valor de "prob_exito"
+                String porcentaje = rootNode.get("prob_exito").asText();
+    
+                // Convertir a double
+                double valorDouble = Double.parseDouble(porcentaje.replace("%", ""));
+                // Imprimir el resultado
+                proyectoGuardado.getContent().setPorcentajeExito(valorDouble);
+                System.out.println(proyectoGuardado.getContent().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // Retornar el modelo de datos usando HATEOAS (ajusta según tu implementación)
             return ResponseEntity.created(proyectoGuardado.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(proyectoGuardado);
