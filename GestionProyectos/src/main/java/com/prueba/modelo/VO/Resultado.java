@@ -12,14 +12,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name="resultados")
+@Table(name = "resultados")
 public class Resultado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_resultado")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name="id_proyecto")
+    @JoinColumn(name = "id_proyecto")
     private Proyecto proyecto;
     private double resultado;
     private Date fechaResultado;

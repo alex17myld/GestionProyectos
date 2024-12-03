@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.prueba.modelo.Repository.ResultadoRepository;
 import com.prueba.modelo.VO.Resultado;
 
+@Service
 public class ResultadoService {
     @Autowired
 	private ResultadoRepository repository;
