@@ -6,12 +6,17 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.prueba.controller.service.ProyectosService;
+import com.prueba.controller.service.ResultadoService;
 import com.prueba.modelo.VO.Proyecto;
+import com.prueba.modelo.VO.Resultado;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpHeaders;
+
+import java.time.LocalDate;
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -24,30 +29,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 public class IAController {
 
-    private final ProyectosService service;
-    private final ProyectosAssembler assembler;
-
     @Autowired
     private ProyectosController proyectoController;
-
-    IAController(ProyectosService service, ProyectosAssembler assembler) {
-        this.service = service;
-        this.assembler = assembler;
-    }
+    @Autowired
+    private ResultadoService resultadoService;
 
     @GetMapping("/IA")
     public String getMethodName(@RequestParam String param) {
         return new String();
     }
-
-    /*
-     * "certificaciones_requeridas",
-     * "precio_hora",
-     * "fortaleza_tecnologica",
-     * "experiencia_requerida",
-     * "numero_perfiles_requeridos",
-     * "curriculums"
-     */
 
     @PostMapping("/IA")
     ResponseEntity<?> enviarSolicitudIA(@RequestBody Proyecto proyecto) {
@@ -69,7 +59,7 @@ public class IAController {
             json.put("precio_hora", proyectoRecuperado.getPrecioHora().getNombre());
             json.put("volumetria", proyectoRecuperado.getVolumetria().getId());
 
-            //System.out.println("JSON enviado al microservicio: " + json);
+            // System.out.println("JSON enviado al microservicio: " + json);
 
             // URL del microservicio de IA
             String iaEndpointUrl = "http://192.168.40.83:8000/predict/";
@@ -90,24 +80,36 @@ public class IAController {
             try {
                 // Crear un ObjectMapper
                 ObjectMapper mapperjson = new ObjectMapper();
-    
+
                 // Parsear el JSON directamente como JsonNode
                 JsonNode rootNode = mapperjson.readTree(porcentajeJson);
-    
+
                 // Extraer el valor de "prob_exito"
                 String porcentaje = rootNode.get("prob_exito").asText();
-    
+
                 // Convertir a double
                 double valorDouble = Double.parseDouble(porcentaje.replace("%", ""));
-                // Imprimir el resultado
-                proyectoGuardado.getContent().setPorcentajeExito(valorDouble);
-                System.out.println(proyectoGuardado.getContent().toString());
+                // proyectoGuardado.getContent().setPorcentajeExito(valorDouble);
+
+                LocalDate fechaHoy = LocalDate.now();
+
+                // Convertir LocalDate a java.sql.Date
+                Date sqlFecha = Date.valueOf(fechaHoy);
+
+                Resultado resultado = new Resultado();
+                resultado.setProyecto(proyectoRecuperado);
+                resultado.setResultado(valorDouble);
+                resultado.setFechaResultado(sqlFecha);
+
+                resultadoService.save(resultado);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             // Retornar el modelo de datos usando HATEOAS (ajusta según tu implementación)
-            return ResponseEntity.created(proyectoGuardado.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(proyectoGuardado);
+            return ResponseEntity.created(proyectoGuardado.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                    .body(proyectoGuardado);
 
         } catch (Exception e) {
             // Manejo de cualquier otra excepción general

@@ -75,7 +75,7 @@ public class Proyecto {
     private FacturacionAnual facturacionAnual;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "entregable_id")
+    @JoinColumn(name = "entregables_id")
     private Entregable entregable;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idiomas_id")
