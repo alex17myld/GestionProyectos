@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RouterController {
     
     @GetMapping("/")
-    public String home(@RequestParam String param) {
-        return "home";
-    } 
+    public String home() {
+        return "home";  
+    }
+    
+    @GetMapping("/graphs")
+    public String getMethodName(@RequestParam String param) {
+        return "graphs";
+    }
+    
 }

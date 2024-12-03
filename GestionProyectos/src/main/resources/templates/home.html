@@ -108,7 +108,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <p>A SERBATIC APP a</p>
+                    <p>A SERBATIC APP</p>
                     <h1>AI Project Analyzer</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,8 +128,10 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>  
     </header>
+
+
 
     <div class="hero">
         <h1>WELCOME.</h1>
@@ -146,6 +148,57 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="overallSuccess.js"></script>
+    <script>
+        async function fetchProjectData() {
+        try {
+            const response = await fetch('/proyectos');
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos');
+            }
+            const data = await response.json();
+            return data._embedded.proyectoList;
+        } catch (error) {
+            console.error('Error al obtener los datos de los proyectos:', error);
+            return [];
+        }
+    }
+
+    async function renderOverallSuccessChart() {
+        const projects = await fetchProjectData();
+
+       
+        const results = projects.reduce(
+            (acc, project) => {
+                const resultKey = project.porcentajeExito > 80 ? 'Success' : 'Failure';
+                acc[resultKey] = (acc[resultKey] || 0) + 1;
+                return acc;
+            },
+            { Success: 0, Failure: 0 }
+        );
+
+        const ctx = document.getElementById('overallSuccessChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Success', 'Failure'],
+                datasets: [{
+                    data: [results.Success, results.Failure],
+                    backgroundColor: ['#007bff', '#d1e7ff'],
+                    hoverBackgroundColor: ['#0056b3', '#a3d0ff']
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: { enabled: false }
+                },
+                events: []
+            }
+        });
+    }
+
+    renderOverallSuccessChart();
+
+    </script>
 </body>
 </html>

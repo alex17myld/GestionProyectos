@@ -11,9 +11,9 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 -- Drop and create database
-DROP DATABASE IF EXISTS `gestionproyectos`;
-CREATE DATABASE `gestionproyectos`;
-USE `gestionproyectos`;
+DROP DATABASE IF EXISTS `gestion_proyectos`;
+CREATE DATABASE `gestion_proyectos`;
+USE `gestion_proyectos`;
 
 START TRANSACTION;
 

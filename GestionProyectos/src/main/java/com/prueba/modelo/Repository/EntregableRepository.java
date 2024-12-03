@@ -3,10 +3,10 @@ package com.prueba.modelo.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.prueba.modelo.VO.Cliente;
+import com.prueba.modelo.VO.Entregable;
+
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-	public Cliente findByid(long id);
+public interface EntregableRepository extends JpaRepository<Entregable, Integer>{
+    Entregable findById(int id);
 }
-
