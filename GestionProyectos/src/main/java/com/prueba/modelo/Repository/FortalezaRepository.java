@@ -6,5 +6,5 @@ import com.prueba.modelo.VO.FortalezaTecnologia;
 
 @Repository
 public interface FortalezaRepository extends JpaRepository<FortalezaTecnologia, Integer> {
-    
+    //merequetengue
 }
