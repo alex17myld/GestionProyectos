@@ -14,8 +14,14 @@ public class RouterController {
     }
     
     @GetMapping("/graphs")
-    public String getMethodName(@RequestParam String param) {
+    public String graphs() {
         return "graphs";
     }
+
+    @GetMapping("/projectAnalyzer")
+    public String getMethodName(@RequestParam String param) {
+        return "projectAnalyzer";
+    }
+    
 
 }
