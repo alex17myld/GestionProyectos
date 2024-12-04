@@ -1,19 +1,9 @@
 package com.prueba.modelo.VO;
 
-
 import java.util.Objects;
 import java.util.Set;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,24 +17,23 @@ import lombok.ToString;
 @ToString(exclude = "proyectos")
 
 @Entity
-@Table(name = "Tecnologias")
+@Table(name = "tecnologias") // Nombre de tabla en minúsculas por convención
 public class Tecnologia {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nombre;
-	@Column(name = "frecuencia_uso")
-	private Long frecuenciaUso;
-	@ManyToMany
-    @JoinTable(
-            name = "Proyectos_Tecnologias", // Nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name = "id_tecnologia"), // Llave foránea hacia Estudiante
-            inverseJoinColumns = @JoinColumn(name = "id_proyecto") // Llave foránea hacia Curso
-        )
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
+
+    @Column(name = "frecuencia_uso", nullable = true)
+    private Long frecuenciaUso;
+
+    @ManyToMany(mappedBy = "tecnologias", fetch = FetchType.LAZY)
     private Set<Proyecto> proyectos;
-	
-	@Override
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

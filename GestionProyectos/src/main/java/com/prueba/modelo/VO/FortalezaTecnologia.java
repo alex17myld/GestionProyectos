@@ -10,11 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name="fortaleza_tecnologica")
+@Table(name = "fortaleza_tecnologica")
 public class FortalezaTecnologia {
-    
+
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 255) // Asegurar que no sea nulo y limitar el tamaño del texto.
     private String nombre;
 }

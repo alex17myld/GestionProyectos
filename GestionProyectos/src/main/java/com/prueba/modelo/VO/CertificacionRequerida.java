@@ -14,8 +14,9 @@ import lombok.NoArgsConstructor;
 public class CertificacionRequerida {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; // Usar Integer en lugar de int para permitir valores nulos si es necesario.
+
+    @Column(nullable = false, length = 255) // Agregar restricciones según la base de datos.
     private String nombre;
-    
 }
