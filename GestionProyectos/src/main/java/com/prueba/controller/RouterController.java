@@ -17,5 +17,5 @@ public class RouterController {
     public String getMethodName(@RequestParam String param) {
         return "graphs";
     }
-    
+
 }
