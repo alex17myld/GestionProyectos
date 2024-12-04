@@ -2,22 +2,19 @@ package com.prueba.modelo.VO;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "tecnologias")
 
@@ -29,73 +26,90 @@ public class Proyecto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @Column(name = "nombre_proyecto")
+    @Column(name = "nombre_proyecto", nullable = false)
     private String nombreProyecto;
+
+    @Column(nullable = false)
     private int duracion;
+
+    @Column(nullable = false)
     private Double presupuesto;
-    @Column(name = "numero_perfiles_requeridos")
+
+    @Column(name = "numero_perfiles_requeridos", nullable = false)
     private int numeroPerfilesRequeridos;
 
     @ManyToMany
-    @JoinTable(name = "Proyectos_Tecnologias", // Nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name = "id_proyecto"), // Llave foránea hacia Estudiante
-            inverseJoinColumns = @JoinColumn(name = "id_tecnologia") // Llave foránea hacia Curso
+    @JoinTable(
+        name = "proyectos_tecnologias",
+        joinColumns = @JoinColumn(name = "id_proyecto"),
+        inverseJoinColumns = @JoinColumn(name = "id_tecnologia")
     )
     private Set<Tecnologia> tecnologias;
 
-   
-    private List<String> recursosAsignados;
+    @Column(name = "recursos_asignados")
+    private String recursosAsignados; // Cambiado a String (almacenado como CSV en la base de datos)
+
+    @Column(name = "fecha_inicio")
     private Date fechaInicio;
+
+    @Column(name = "fecha_fin")
     private Date fechaFin;
+
+    @Column(name = "fecha_registro", updatable = false, insertable = false)
     private Timestamp fechaRegistro;
-    // nuevo
+
+    @Column(name = "solvencia_economica_empresa")
     private String solvenciaEconomicaEmpresa;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "certificaciones_requeridas_id")
     private CertificacionRequerida certificacionRequerida;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "precio_hora_id")
     private PrecioHora precioHora;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "fortaleza_tecnologica_id")
     private FortalezaTecnologia fortalezaTecnologica;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "experiencia_requerida_id")
     private ExperienciaRequerida experienciaRequerida;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "facturacion_anual_id")
     private FacturacionAnual facturacionAnual;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "entregables_id")
     private Entregable entregable;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "idiomas_id")
     private Idioma idioma;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "lugar_trabajo_id")
     private LugarTrabajo lugarTrabajo;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "volumetria_id")
     private Volumetria volumetria;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "titulaciones_empleados_id")
     private TitulacionEmpleado titulacionEmpleado;
 
     @Column(name = "porcentaje_exito")
     private double porcentajeExito;
 
+    @Column(nullable = false)
     private boolean exito;
-
 
     @Override
     public boolean equals(Object o) {
@@ -105,13 +119,12 @@ public class Proyecto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Proyecto project = (Proyecto) o;
-        return id != null && Objects.equals(id, project.id);
+        Proyecto proyecto = (Proyecto) o;
+        return Objects.equals(id, proyecto.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id);
     }
-
 }

@@ -14,14 +14,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "resultados")
 public class Resultado {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resultado")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_proyecto")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_proyecto", nullable = false)
     private Proyecto proyecto;
+
+    @Column(name = "resultado", nullable = false)
     private double resultado;
+
+    @Column(name = "fecha_resultado", nullable = false)
     private Date fechaResultado;
 }

@@ -10,11 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name="experiencia_requerida")
+@Table(name = "experiencia_requerida")
 public class ExperienciaRequerida {
-    
+
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 255) // Configuración para asegurar la validez del campo.
     private String nombre;
 }

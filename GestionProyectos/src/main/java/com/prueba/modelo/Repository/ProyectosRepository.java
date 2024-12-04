@@ -15,4 +15,7 @@ public interface ProyectosRepository extends JpaRepository<Proyecto, Long> {
 	
 	@Query(value = "SELECT p FROM Proyecto p")
     Page<Proyecto> findAllWithPagination(Pageable pageable);
+
+	@Query("SELECT p FROM Proyecto p ORDER BY p.id DESC")
+    Proyecto findLastInserted();
 }

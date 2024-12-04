@@ -41,5 +41,10 @@ public class ProyectosService {
 	public Page<Proyecto> getAllProducts(Pageable pageable) {
         return repository.findAllWithPagination(pageable);
     }
+
+
+	public Proyecto getLastInserted() {
+        return repository.findLastInserted();
+    }
 	
 }

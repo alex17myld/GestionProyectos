@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name="lugar_de_trabajo")
-
+@Table(name = "lugar_de_trabajo") // Nombre de la tabla coincide con el SQL
 public class LugarTrabajo {
-    
+
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; // Cambiado a Integer para permitir valores nulos antes de persistir
+
+    @Column(nullable = false, length = 255) // Agrega restricciones a la columna
     private String nombre;
 }

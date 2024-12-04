@@ -2,14 +2,7 @@ package com.prueba.modelo.VO;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,18 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "Predicciones")
+@Table(name = "predicciones") // Nombre en minúscula para mantener consistencia con las convenciones
 public class Prediccion {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "proyecto_id", referencedColumnName = "id", nullable = false)
     private Proyecto proyecto;
 
-    @Column(name = "probabilidad_exito")
+    @Column(name = "probabilidad_exito", nullable = false)
     private Double probabilidadExito;
 
-    @Column(name = "fecha_prediccion", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "fecha_prediccion", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private LocalDateTime fechaPrediccion;
 }
