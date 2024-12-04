@@ -7,16 +7,13 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import os
 import joblib
-import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-import numpy as np
 
 # Verificar si TensorFlow detecta la GPU
 print("Dispositivos detectados:", tf.config.list_physical_devices())
 
 # Obtener la ruta absoluta del script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, 'new_training_dataset.csv')
+file_path = os.path.join(script_dir, 'datos_entrenamiento.csv')
 
 # Cargar los datos
 data = pd.read_csv(file_path)
@@ -80,10 +77,10 @@ X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.
 # Crear el modelo
 model = Sequential()
 
-# Arquitectura estándar sin dar peso adicional al presupuesto
-model.add(Dense(64, input_dim=X_train.shape[1], activation='relu'))  # Capa de entrada
-model.add(Dense(32, activation='relu'))  # Primera capa oculta
-model.add(Dense(16, activation='relu'))  # Segunda capa oculta
+# Dar mayor peso al presupuesto agregando más capas y neuronas
+model.add(Dense(128, input_dim=X_train.shape[1], activation='relu'))  # Más neuronas en la entrada
+model.add(Dense(64, activation='relu'))  # Segunda capa oculta
+model.add(Dense(32, activation='relu'))  # Tercera capa oculta
 model.add(Dense(1, activation='sigmoid'))  # Capa de salida (normalizada a [0, 1])
 
 # Compilar el modelo
@@ -115,48 +112,3 @@ except RuntimeError as e:
 model_path = os.path.join(script_dir, 'modelo_exito.h5')
 model.save(model_path)
 print(f"Modelo guardado en: {model_path}")
-
-# Evaluar el modelo
-loss, mae = model.evaluate(X_test, y_test, verbose=0)
-predictions = model.predict(X_test)
-
-# Calcular métricas adicionales
-mse = mean_squared_error(y_test, predictions)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_test, predictions)
-
-# Mostrar las métricas
-print(f"Mean Absolute Error (MAE): {mae:.4f}")
-print(f"Mean Squared Error (MSE): {mse:.4f}")
-print(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
-print(f"R² Score: {r2:.4f}")
-
-# Visualizar la pérdida durante el entrenamiento
-plt.figure(figsize=(10, 5))
-plt.plot(history.history['loss'], label='Pérdida de entrenamiento')
-plt.plot(history.history['val_loss'], label='Pérdida de validación')
-plt.xlabel('Épocas')
-plt.ylabel('Pérdida')
-plt.legend()
-plt.title("Pérdida durante el entrenamiento y validación")
-plt.show()
-
-# Visualizar MAE durante el entrenamiento
-plt.figure(figsize=(10, 5))
-plt.plot(history.history['mae'], label='MAE de entrenamiento')
-plt.plot(history.history['val_mae'], label='MAE de validación')
-plt.xlabel('Épocas')
-plt.ylabel('MAE')
-plt.legend()
-plt.title("MAE durante el entrenamiento y validación")
-plt.show()
-
-# Comparar predicciones con valores reales
-plt.figure(figsize=(8, 8))
-plt.scatter(y_test, predictions, alpha=0.6, label="Predicciones")
-plt.plot([0, 1], [0, 1], '--', color='red', label='Línea ideal')
-plt.xlabel("Valores reales")
-plt.ylabel("Predicciones")
-plt.title("Comparación: Valores reales vs Predicciones")
-plt.legend()
-plt.show()

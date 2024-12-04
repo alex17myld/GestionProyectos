@@ -46,7 +46,7 @@ public class Proyecto {
     )
     private Set<Tecnologia> tecnologias;
 
-    @Column(name = "recursos_asignados")
+   
     private List<String> recursosAsignados;
     private Date fechaInicio;
     private Date fechaFin;
