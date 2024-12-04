@@ -1,12 +1,28 @@
 package com.prueba.controller.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-import com.prueba.modelo.Repository.*;
-import com.prueba.modelo.VO.*;
+import com.prueba.modelo.Repository.CertificacionRequeridaRepository;
+import com.prueba.modelo.Repository.EntregableRepository;
+import com.prueba.modelo.Repository.ExperienciaRequeridaRepository;
+import com.prueba.modelo.Repository.FacturacionAnualRepository;
+import com.prueba.modelo.Repository.FortalezaTecnologicaRepository;
+import com.prueba.modelo.Repository.IdiomaRepository;
+import com.prueba.modelo.Repository.LugarTrabajoRepository;
+import com.prueba.modelo.Repository.TitulacionEmpleadoRepository;
+import com.prueba.modelo.Repository.VolumetriaRepository;
+import com.prueba.modelo.VO.CertificacionRequerida;
+import com.prueba.modelo.VO.Entregable;
+import com.prueba.modelo.VO.ExperienciaRequerida;
+import com.prueba.modelo.VO.FacturacionAnual;
+import com.prueba.modelo.VO.FortalezaTecnologia;
+import com.prueba.modelo.VO.Idioma;
+import com.prueba.modelo.VO.LugarTrabajo;
+import com.prueba.modelo.VO.TitulacionEmpleado;
+import com.prueba.modelo.VO.Volumetria;
 
 @Service
 public class DatosProyectoService {
@@ -75,5 +91,4 @@ public class DatosProyectoService {
     public List<ExperienciaRequerida> getAllExperienciasRequeridas() {
         return experienciaRequeridaRepository.findAll();
     }
-}
 }
