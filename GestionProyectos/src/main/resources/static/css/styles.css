@@ -55,7 +55,7 @@ header {
 .hero h1 {
     font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
 
 .hero p {
@@ -85,7 +85,7 @@ header {
 .card h5 {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #007bff;
+    color: #000000;
 }
 
 .hero .card {
