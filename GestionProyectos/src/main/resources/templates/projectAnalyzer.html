@@ -2,16 +2,239 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: head"></head>
 <body>
-    <header th:replace="fragments/header :: body"></header>
+    <header th:replace="fragments/header :: header"></header>
 
-    <div class="hero">
-        <h1 class="my-5 text-center">PROJECT ANALYZER</h1>
-        <div class="card mt-5">
+    <div class="container">
+        <div class="form-wrapper">
+            <h1>Formulario de Proyectos</h1>
+            <form id="proyectoForm">
+                <div class="form-row">
+                    <label for="nombre_proyecto">Nombre del Proyecto:</label>
+                    <input type="text" id="nombre_proyecto" name="nombre_proyecto" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="cliente">Cliente:</label>
+                    <input type="text" id="cliente" name="cliente" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="duracion">Duración (meses):</label>
+                    <input type="number" id="duracion" name="duracion" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="presupuesto">Presupuesto (€):</label>
+                    <input type="number" id="presupuesto" name="presupuesto" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label for="certificaciones_requeridas_id">Certificaciones Requeridas:</label>
+                        <select id="certificaciones_requeridas_id" name="certificaciones_requeridas_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="entregables_id">Entregables:</label>
+                        <select id="entregables_id" name="entregables_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="experiencia_requerida_id">Experiencia Requerida:</label>
+                        <select id="experiencia_requerida_id" name="experiencia_requerida_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="facturacion_anual_id">Facturación Anual:</label>
+                        <select id="facturacion_anual_id" name="facturacion_anual_id" required></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label for="fortaleza_tecnologica_id">Fortaleza Tecnológica:</label>
+                        <select id="fortaleza_tecnologica_id" name="fortaleza_tecnologica_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="idiomas_id">Idiomas:</label>
+                        <select id="idiomas_id" name="idiomas_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="lugar_trabajo_id">Lugar de Trabajo:</label>
+                        <select id="lugar_trabajo_id" name="lugar_trabajo_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="precio_hora_id">Precio por Hora:</label>
+                        <select id="precio_hora_id" name="precio_hora_id" required></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label for="titulaciones_empleados_id">Titulaciones de Empleados:</label>
+                        <select id="titulaciones_empleados_id" name="titulaciones_empleados_id" required></select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="volumetria_id">Volumetría:</label>
+                        <select id="volumetria_id" name="volumetria_id" required></select>
+                    </div>
+                </div>
+
+                <button type="submit">Guardar Proyecto</button>
+            </form>
         </div>
     </div>
 
-    <footer th:replace="fragments/footer :: footer"></header>
+    <footer th:replace="fragments/footer :: footer"></footer>
 
-    <script th:src="@{/JS/graphs.js}"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #e6f7ff, #85d1ff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-wrapper {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+        }
+
+        .form-row label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-row input, .form-row select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // JSON Simulado con Opciones
+        const options = {
+            certificaciones_requeridas: [
+                { id: 1, nombre: 'Serbatic' },
+                { id: 2, nombre: 'VaSS' },
+                { id: 3, nombre: 'Otra' }
+            ],
+            entregables: [
+                { id: 1, nombre: 'Económico y CVS' },
+                { id: 2, nombre: 'Documentación Técnica' },
+                { id: 3, nombre: 'Otro' }
+            ],
+            experiencia_requerida: [
+                { id: 1, nombre: 'Específica' },
+                { id: 2, nombre: 'Generalista' }
+            ],
+            facturacion_anual: [
+                { id: 1, nombre: 'Menos de 250k' },
+                { id: 2, nombre: 'Entre 250k y 1M' },
+                { id: 3, nombre: 'Más de 1M' }
+            ],
+            fortaleza_tecnologica: [
+                { id: 1, nombre: 'Nivel Básico' },
+                { id: 2, nombre: 'Nivel Alto' },
+                { id: 3, nombre: 'Nivel Experto' }
+            ],
+            idiomas: [
+                { id: 1, nombre: 'Sí' },
+                { id: 2, nombre: 'No' }
+            ],
+            lugar_trabajo: [
+                { id: 1, nombre: 'Presencial' },
+                { id: 2, nombre: 'Remoto' },
+                { id: 3, nombre: 'Híbrido' }
+            ],
+            precio_hora: [
+                { id: 1, nombre: 'Dentro del mercado' },
+                { id: 2, nombre: 'Por debajo del mercado' },
+                { id: 3, nombre: 'Por encima del mercado' }
+            ],
+            titulaciones_empleados: [
+                { id: 1, nombre: 'Titulación Universitaria 100%' },
+                { id: 2, nombre: 'MÁS DE UN 50% FP' },
+                { id: 3, nombre: 'MÁS TITULADOS UNIVERSITARIOS QUE FP' }
+            ],
+            volumetria: [
+                { id: 1, nombre: 'Sí' },
+                { id: 2, nombre: 'No' }
+            ]
+        };
+
+        // Rellenar Selects
+        function populateSelect(id, data) {
+            const select = document.getElementById(id);
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.nombre;
+                select.appendChild(option);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Object.keys(options).forEach(key => {
+                populateSelect(`${key}_id`, options[key]);
+            });
+        });
+
+        document.getElementById('proyectoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            console.log('Datos del Proyecto:', data);
+            alert('Proyecto guardado con éxito');
+        });
+    </script>
 </body>
 </html>

@@ -63,16 +63,16 @@
                     }
                 ]
             };
-
+    
             function renderOverallSuccessChart(projects) {
                 const results = projects.reduce((acc, project) => {
                     const resultKey = project.porcentajeExito > 80 ? 'Success' : 'Failure';
                     acc[resultKey] = (acc[resultKey] || 0) + 1;
                     return acc;
                 }, { Success: 0, Failure: 0 });
-
+    
                 const ctx = document.getElementById('overallSuccessChart').getContext('2d');
-
+    
                 new Chart(ctx, {
                     type: 'pie',
                     data: {
@@ -82,10 +82,27 @@
                             backgroundColor: ['#007bff', '#d1e7ff'],
                             hoverBackgroundColor: ['#0056b3', '#a3d0ff']
                         }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: '#333', // Color del texto de la leyenda
+                                    font: {
+                                        family: 'Poppins, sans-serif', // Fuente moderna
+                                        size: 14, // Tamaño de fuente
+                                        weight: 'bold' // Negrita para un estilo más destacado
+                                    },
+                                    padding: 20 // Espaciado entre elementos de la leyenda
+                                },
+                                position: 'top' // Coloca la leyenda en la parte superior
+                            }
+                        }
                     }
                 });
             }
-
+    
             function renderTechnologyChart(projects) {
                 const techUsage = projects.reduce((acc, project) => {
                     project.tecnologias.forEach(tech => {
@@ -93,9 +110,9 @@
                     });
                     return acc;
                 }, {});
-
+    
                 const ctx = document.getElementById('technologyChart').getContext('2d');
-
+    
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -107,19 +124,24 @@
                         }]
                     },
                     options: {
-                        indexAxis: 'y'
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: {
+                                display: false // Sin leyenda en gráficos de barra
+                            }
+                        }
                     }
                 });
             }
-
+    
             function renderClientSuccessChart(projects) {
                 const clientSuccess = projects.reduce((acc, project) => {
                     acc[project.cliente] = (acc[project.cliente] || 0) + (project.porcentajeExito > 80 ? 1 : 0);
                     return acc;
                 }, {});
-
+    
                 const ctx = document.getElementById('clientSuccessChart').getContext('2d');
-
+    
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -131,15 +153,21 @@
                         }]
                     },
                     options: {
-                        indexAxis: 'x'
+                        indexAxis: 'x',
+                        plugins: {
+                            legend: {
+                                display: false // Sin leyenda en gráficos de barra
+                            }
+                        }
                     }
                 });
             }
-
+    
             renderOverallSuccessChart(data.proyectos);
             renderTechnologyChart(data.proyectos);
             renderClientSuccessChart(data.proyectos);
         });
     </script>
+    
 </body>
 </html>
