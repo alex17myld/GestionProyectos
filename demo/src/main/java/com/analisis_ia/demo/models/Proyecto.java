@@ -33,6 +33,8 @@ public class Proyecto {
     private Byte resultado;
 
     private String cliente;
+    private String solvenciaEconomicaEmpresa;
+    private int numeroPerfilesRequeridos;
 
     @ManyToOne(fetch = FetchType.LAZY) // Relación de muchos a uno
     @JoinColumn(name = "certificaciones_requeridas_id", referencedColumnName = "id")
@@ -62,13 +64,9 @@ public class Proyecto {
     @JoinColumn(name = "lugar_trabajo_id", referencedColumnName = "id")
     private LugarTrabajo lugarTrabajo;
 
-    private int numeroPerfilesRequeridos;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "precio_hora_id", referencedColumnName = "id")
     private PrecioHora precioHora;
-
-    private String solvenciaEconomicaEmpresa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "titulaciones_empleados_id", referencedColumnName = "id")
