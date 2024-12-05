@@ -3,18 +3,143 @@
 <head th:replace="fragments/header :: head"></head>
 <body>
     <header th:replace="fragments/header :: body"></header>
+    <main>
+        <div class="card-container">
+            <div class="card">
+                <h5>Overall Project Success Rate</h5>
+                <canvas id="overallSuccessChart"></canvas>
+            </div>
 
-    <div class="hero">
-        <h1 class="my-5 text-center">PROJECT REPOSITORY</h1>
-        
-        <div class="card mt-5">
-            <div id="graficasTecnologias" class="row g-4"></div>
+            <div class="card">
+                <h5>Technology Usage</h5>
+                <canvas id="technologyChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h5>Client Success Distribution</h5>
+                <canvas id="clientSuccessChart"></canvas>
+            </div>
         </div>
-    </div>
+    </main>
 
+    <footer th:replace="fragments/footer :: footer"></footer>
 
-    <footer th:replace="fragments/footer :: footer"></header>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const data = {
+                proyectos: [
+                    {
+                        id: 6,
+                        nombreProyecto: "Proyecto Completo",
+                        porcentajeExito: 85.5,
+                        duracion: 12,
+                        cliente: "Cliente Ejemplo",
+                        tecnologias: ["Java", "Python"],
+                        certificacionesRequeridas: "Serbatic",
+                        lugarTrabajo: "Presencial",
+                        presupuesto: 150000
+                    },
+                    {
+                        id: 7,
+                        nombreProyecto: "Proyecto 2",
+                        porcentajeExito: 72.3,
+                        duracion: 6,
+                        cliente: "Cliente ABC",
+                        tecnologias: ["JavaScript", "C#"],
+                        certificacionesRequeridas: "VaSS",
+                        lugarTrabajo: "Remoto",
+                        presupuesto: 100000
+                    },
+                    {
+                        id: 8,
+                        nombreProyecto: "Proyecto Innovador",
+                        porcentajeExito: 90.0,
+                        duracion: 18,
+                        cliente: "Cliente Ejemplo",
+                        tecnologias: ["Python", "Ruby"],
+                        certificacionesRequeridas: "Otra",
+                        lugarTrabajo: "Híbrido",
+                        presupuesto: 300000
+                    }
+                ]
+            };
 
-    <script th:src="@{/JS/graphs.js}"></script>
+            function renderOverallSuccessChart(projects) {
+                const results = projects.reduce((acc, project) => {
+                    const resultKey = project.porcentajeExito > 80 ? 'Success' : 'Failure';
+                    acc[resultKey] = (acc[resultKey] || 0) + 1;
+                    return acc;
+                }, { Success: 0, Failure: 0 });
+
+                const ctx = document.getElementById('overallSuccessChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Success', 'Failure'],
+                        datasets: [{
+                            data: [results.Success, results.Failure],
+                            backgroundColor: ['#007bff', '#d1e7ff'],
+                            hoverBackgroundColor: ['#0056b3', '#a3d0ff']
+                        }]
+                    }
+                });
+            }
+
+            function renderTechnologyChart(projects) {
+                const techUsage = projects.reduce((acc, project) => {
+                    project.tecnologias.forEach(tech => {
+                        acc[tech] = (acc[tech] || 0) + 1;
+                    });
+                    return acc;
+                }, {});
+
+                const ctx = document.getElementById('technologyChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(techUsage),
+                        datasets: [{
+                            data: Object.values(techUsage),
+                            backgroundColor: '#007bff',
+                            hoverBackgroundColor: '#0056b3'
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y'
+                    }
+                });
+            }
+
+            function renderClientSuccessChart(projects) {
+                const clientSuccess = projects.reduce((acc, project) => {
+                    acc[project.cliente] = (acc[project.cliente] || 0) + (project.porcentajeExito > 80 ? 1 : 0);
+                    return acc;
+                }, {});
+
+                const ctx = document.getElementById('clientSuccessChart').getContext('2d');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(clientSuccess),
+                        datasets: [{
+                            data: Object.values(clientSuccess),
+                            backgroundColor: '#d1e7ff',
+                            hoverBackgroundColor: '#a3d0ff'
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'x'
+                    }
+                });
+            }
+
+            renderOverallSuccessChart(data.proyectos);
+            renderTechnologyChart(data.proyectos);
+            renderClientSuccessChart(data.proyectos);
+        });
+    </script>
 </body>
 </html>

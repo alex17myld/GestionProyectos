@@ -1,5 +1,3 @@
-
-
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -12,6 +10,7 @@ header {
     background-color: white;
     color: #212529;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
 }
 
 .navbar-brand {
@@ -50,17 +49,27 @@ header {
     min-height: calc(100vh - 80px);
     color: white;
     margin-top: 5%;
+    padding: 40px 20px; /* Espaciado para que el contenido respire */
 }
 
 .hero h1 {
     font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .hero p {
     font-size: 1.2rem;
     color: black;
+    margin-bottom: 30px;
+    font-family: Cascadia Code, monospace; /* Estilo original del texto */
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Tres tarjetas por fila */
+    gap: 30px; /* Espacio entre tarjetas */
+    padding: 40px; /* Espacio entre contenido y bordes */
 }
 
 .card {
@@ -68,16 +77,21 @@ header {
     border: none;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 35px;
+    padding: 20px;
     text-align: center;
-    max-width: 700px;
-    margin: auto;
+    max-width: 100%; /* Ajuste automático según el contenedor */
 }
 
 .card h5 {
     font-size: 1.2rem;
     font-weight: bold;
     color: #007bff;
+}
+
+.hero .card {
+    max-width: 600px; /* Limitar ancho en vistas de un solo gráfico */
+    width: 90%; /* Asegurar ajuste en pantallas pequeñas */
+    margin: auto; /* Centrar la tarjeta */
 }
 
 canvas {
@@ -88,25 +102,59 @@ canvas {
 footer {
     background-color: white;
     color: black;
-    margin-top:0;
+    margin-top: 40px;
     text-align: center;
     padding: 30px 0;
 }
 
+select, button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
 
+select:hover, button:hover {
+    background-color: #0056b3;
+}
+
+select {
+    color: black;
+}
+
+/* Ajustes responsivos */
 @media (max-width: 992px) {
-    .navbar-collapse {
-        margin-top: 30px;
+    .card-container {
+        grid-template-columns: repeat(2, 1fr); /* Dos tarjetas por fila en pantallas medianas */
     }
 
-    .nav-link {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 20px;
-        text-align: center;
+    .card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr; /* Una tarjeta por fila en pantallas pequeñas */
     }
 
-    .navbar-collapse.show {
-        background-color: white;
+    .card {
+        padding: 15px;
+    }
+
+    .card h5 {
+        font-size: 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem; /* Ajustar el título en pantallas pequeñas */
+    }
+
+    .hero p {
+        font-size: 1rem;
     }
 }
