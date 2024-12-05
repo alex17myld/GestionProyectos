@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"></head>
+<body>
+    <header th:replace="fragments/header :: body"></header>
+
+    <div class="hero">
+        <h1 class="my-5 text-center">PROJECT ANALYZER</h1>
+        <div class="card mt-5">
+        </div>
+    </div>
+
+    <footer th:replace="fragments/footer :: footer"></header>
+
+    <script th:src="@{/JS/graphs.js}"></script>
+</body>
+</html>
