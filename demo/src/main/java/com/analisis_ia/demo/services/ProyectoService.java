@@ -1,10 +1,11 @@
 package com.analisis_ia.demo.services;
 
 import com.analisis_ia.demo.models.*;
-import com.analisis_ia.demo.models.CertificacionRequerida;
 import com.analisis_ia.demo.repositories.*;
 
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,9 +94,13 @@ public class ProyectoService {
                 .orElseThrow(() -> new RuntimeException("Entregable no encontrado"));
     }
 
+        public List<Proyecto> getAllProyectos() {
+        return proyectoRepository.findAll();
+    }
+
     @Transactional
     public Proyecto guardarProyecto(Proyecto proyecto) {
-        // Asegúrate de que las tecnologías existan antes de guardar
+       
         proyecto.getTecnologias().forEach(tecnologia -> {
             if (!tecnologiaRepository.existsById(tecnologia.getId())) {
                 throw new RuntimeException("Tecnología no encontrada: " + tecnologia.getId());

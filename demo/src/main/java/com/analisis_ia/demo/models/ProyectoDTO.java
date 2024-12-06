@@ -1,25 +1,27 @@
-package com.analisis_ia.demo.models;
+    package com.analisis_ia.demo.models;
 
-import lombok.Data;
+    import lombok.Data;
 
-import java.util.Set;
+    import java.util.Set;
 
-@Data
-public class ProyectoDTO {
-    private int duracion;
-    private Double presupuesto;
-    private String nombreProyecto;
-    private String cliente;
-    private int facturacionAnual; 
-    private int fortalezaTecnologica; 
-    private int experienciaRequerida; 
-    private int lugarTrabajo; 
-    private int numeroPerfilesRequeridos;
-    private int precioHora; 
-    private int volumetria; 
-    private int titulacionEmpleado;
-    private Set<Integer> tecnologias; 
-    private String solvenciaEcomicaEmpresa;
-    private int certificacionRequerida;
-    private int entregable;
-}
+    @Data
+    public class ProyectoDTO {
+        private int duracion;
+        private Double presupuesto;
+        private String nombreProyecto;
+        private String cliente;
+        private int facturacionAnual; 
+        private int fortalezaTecnologica; 
+        private int experienciaRequerida; 
+        private int lugarTrabajo; 
+        private int numeroPerfilesRequeridos;
+        private int precioHora; 
+        private int volumetria; 
+        private int titulacionEmpleado;
+        private Set<Integer> tecnologias; 
+        private String solvenciaEcomicaEmpresa;
+        private int certificacionRequerida;
+        private int entregable;
+        private Double porcentajeExito;  // Añadido para incluir el resultado de la predicción
+
+    }

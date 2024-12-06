@@ -2,11 +2,10 @@ package com.analisis_ia.demo.controllers;
 
 import com.analisis_ia.demo.models.*;
 import com.analisis_ia.demo.services.FormService;
+import com.analisis_ia.demo.services.ProyectoDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -15,6 +14,9 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+
+    @Autowired
+    private ProyectoDTOService proyectoDTOService;
 
     @GetMapping("/certificaciones")
     public List<CertificacionRequerida> getCertificaciones() {
@@ -56,9 +58,13 @@ public class FormController {
         return formService.getAllPreciosHora();
     }
 
+    /**
+     * Endpoint actualizado para devolver ProyectoDTO
+     */
     @GetMapping("/proyectos")
-    public List<Proyecto> getProyectos() {
-        return formService.getAllProyectos();
+    public ResponseEntity<List<ProyectoDTO>> getProyectos() {
+        List<ProyectoDTO> proyectosDTO = proyectoDTOService.getAllProyectos();
+        return ResponseEntity.ok(proyectosDTO);
     }
 
     @GetMapping("/resultados")

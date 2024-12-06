@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Data
 @Entity
 @Table(name = "tecnologias")
@@ -21,7 +23,8 @@ public class Tecnologia {
     private String nombre;
 
     @ManyToMany(mappedBy = "tecnologias", fetch = FetchType.LAZY)
-    private Set<Proyecto> proyectos; // Relación inversa
+    @JsonIgnore
+    private Set<Proyecto> proyectos; 
 
     @Override
     public boolean equals(Object obj) {

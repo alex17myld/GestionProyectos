@@ -25,7 +25,8 @@ public class ProyectoController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String IA_SERVICE_URL = "http://192.168.40.83:8000/predict";
+    //private static final String IA_SERVICE_URL = "http://192.168.40.83:8000/predict";
+    private static final String IA_SERVICE_URL = "http://127.0.0.1:8000/predict";
 
     @PostMapping
     public ResponseEntity<Proyecto> crearProyecto(@RequestBody ProyectoDTO proyectoDTO) {
