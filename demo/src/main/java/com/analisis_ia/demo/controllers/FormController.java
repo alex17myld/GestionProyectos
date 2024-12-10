@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/api/form")
@@ -86,4 +89,12 @@ public class FormController {
     public List<Volumetria> getVolumetrias() {
         return formService.getAllVolumetrias();
     }
+    @PostMapping("/agregarResultado")
+    public Resultado postMethodName(@RequestBody Resultado resultado) {
+        Resultado newResultado = new Resultado();
+        newResultado.setExito(resultado.getExito());
+        newResultado.setProyecto(resultado.getProyecto());
+        return formService.setResultado(newResultado);
+    }
+    
 }

@@ -102,4 +102,8 @@ public class FormService {
     public List<Volumetria> getAllVolumetrias() {
         return volumetriaRepository.findAll();
     }
+
+    public Resultado setResultado(Resultado resultado){
+        return resultadoRepository.save(resultado);
+    }
 }
